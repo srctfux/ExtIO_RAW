@@ -1,0 +1,40 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+#
+# Mingw-w64 32-bit build
+#
+# Compile ExtIO_RAW.dll:
+# $ make -f Makefile.mingw32
+
+PREFIX    = i686-w64-mingw32-
+
+DLL       = ExtIO_RAW.dll
+EXPDEF    = src/ExtIO_RAW.def
+WINDRES   = $(PREFIX)windres
+RES       = res/resource.res
+OBJS      = src/dllmain.o src/ExtIO_RAW.o $(RES)
+INCS      = -I"./src" -I"./res"
+CXX       = $(PREFIX)g++
+CXXFLAGS  = $(INCS) -O2 -Wall -Wextra -m32 -shared -s
+CPPFLAGS  = -D_UNICODE -DUNICODE
+LDFLAGS   = -mwindows -static-libgcc -static-libstdc++    \
+	    -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic \
+	    -Wl,--enable-stdcall-fixup
+RM        = rm -f
+
+all: $(DLL)
+
+$(DLL): $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $(DLL) $(OBJS) $(LDFLAGS) $(EXPDEF)
+
+src/ExtIO_RAW.o: src/ExtIO_RAW.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c src/ExtIO_RAW.cpp -o src/ExtIO_RAW.o
+
+src/dllmain.o: src/dllmain.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c src/dllmain.cpp -o src/dllmain.o
+
+$(RES): res/resource.rc
+	$(WINDRES) $(CPPFLAGS) -i res/resource.rc -F pe-i386    \
+	--input-format=rc -o $(RES) -O coff --include-dir ./res
+
+clean:
+	${RM} $(DLL) $(OBJS)

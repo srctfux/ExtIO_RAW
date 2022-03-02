@@ -1,0 +1,16 @@
+LIBRARY ExtIO_RAW
+EXPORTS
+
+CloseHW
+GetHWLO
+GetHWSR
+GetStatus
+HideGUI
+InitHW
+OpenHW
+SetCallback
+SetHWLO
+ShowGUI
+StartHW
+StopHW
+SwitchGUI
