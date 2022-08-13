@@ -16,8 +16,8 @@ INCS      = -I"./src" -I"./res"
 CXX       = $(PREFIX)g++
 CXXFLAGS  = $(INCS) -O2 -Wall -Wextra -m64 -shared -s
 CPPFLAGS  = -D_UNICODE -DUNICODE
-LDFLAGS   = -mwindows -static-libgcc -static-libstdc++    \
-	    -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic \
+LDFLAGS   = -mwindows -static-libgcc -static-libstdc++ \
+	    -Wl,-Bstatic -lstdc++ -Wl,-Bdynamic \
 	    -Wl,--enable-stdcall-fixup
 RM        = rm -f
 
