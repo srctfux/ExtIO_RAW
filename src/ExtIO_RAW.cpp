@@ -194,6 +194,9 @@ extern "C" int __stdcall StartHW(long /* LOfreq */)
 	EnableWindow(GetDlgItem(h_dialog, IDC_RAW_BUFFER_CTL), FALSE);
 
 	RawDeviceStrSize = wcstombs(NULL, ExtIORawDevice, 0);
+	if (!RawDeviceStrSize)
+		return -1;
+
 	RawDevice = (char *)malloc(RawDeviceStrSize + 1);
 	if (!RawDevice) {
 		EXTIO_RAW_ERROR("Couldn't allocate device buffer!");
@@ -387,18 +390,24 @@ static INT_PTR CALLBACK MainDlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPAR
 		case IDC_RAW_SAMPLE_RATE:
 			if (GET_WM_COMMAND_CMD(wParam, lParam) == EN_CHANGE) {
 				TCHAR srate[256];
+				uint32_t val;
 
 				Edit_GetText((HWND)lParam, srate, 256);
-				ExtIOSampleRate = srate_validate(_ttoi(srate));
+				val = _ttoi(srate);
+				if (val)
+					ExtIOSampleRate = srate_validate(val);
 				EXTIO_SET_STATUS(ExtIOCallback, EXTIO_CHANGED_SR);
 			}
 			return TRUE;
 		case IDC_RAW_BUFFER:
 			if (GET_WM_COMMAND_CMD(wParam, lParam) == EN_CHANGE) {
 				TCHAR rawbuf[256];
+				uint32_t val;
 
 				Edit_GetText((HWND)lParam, rawbuf, 256);
-				ExtIORawBufSize = rawbuf_validate(_ttoi(rawbuf)) * 1024;
+				val = _ttoi(rawbuf);
+				if (val)
+					ExtIORawBufSize = rawbuf_validate(val) * 1024;
 				ExtioRawSetParams();
 				EXTIO_SET_STATUS(ExtIOCallback, EXTIO_CHANGED_SR);
 			}
