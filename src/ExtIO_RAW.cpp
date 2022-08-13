@@ -40,11 +40,11 @@ static const TCHAR *RawFormatArr[] = {
 // ExtIO Options
 static int ExtIORawFormat = 0;         // id: 00 default: RU08
 static int ExtIOSampleRate = 2400000;  // id: 01 default: Min Sample Rate
-static int ExtIOAutoRestart = 0;       // id: 02 default: true
+static int ExtIOAutoRestart = 0;       // id: 02 default: false
 static int ExtIORawBufSize = 4096;     // id: 03 default: 4kB
 
 // Device
-static TCHAR ExtIORawDevice[64];
+static TCHAR ExtIORawDevice[256];
 static char *RawDevice;
 static int fd;
 
