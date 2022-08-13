@@ -136,8 +136,8 @@ static void RawReadCallback(LPVOID /* lpParam */)
 
 extern "C" bool __stdcall InitHW(char *name, char *model, int &hwtype)
 {
-	strcpy_s(name, 16, EXTIO_RAW_NAME);
-	strcpy_s(model, 16, "RAW");
+	strcpy(name, EXTIO_RAW_NAME);
+	strcpy(model, "RAW");
 	hwtype = EXTIO_USBFLOAT32;
 	return TRUE;
 }
@@ -351,7 +351,7 @@ static INT_PTR CALLBACK MainDlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPAR
 
 		SendMessage(GetDlgItem(hwndDlg, IDC_RAW_SAMPLE_RATE),
 			    EM_SETLIMITTEXT, (WPARAM)8, (LPARAM)0);
-		_stprintf_s(srate, 256, TEXT("%d"), ExtIOSampleRate);
+		_sntprintf(srate, 256, TEXT("%d"), ExtIOSampleRate);
 		Edit_SetText(GetDlgItem(hwndDlg, IDC_RAW_SAMPLE_RATE), srate);
 
 		SendMessage(GetDlgItem(hwndDlg, IDC_RAW_BUFFER_CTL),
@@ -360,13 +360,13 @@ static INT_PTR CALLBACK MainDlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPAR
 
 		SendMessage(GetDlgItem(hwndDlg, IDC_RAW_BUFFER),
 			    EM_SETLIMITTEXT, (WPARAM)2, (LPARAM)0);
-		_stprintf_s(rawbuf, 256, TEXT("%d"), ExtIORawBufSize / 1024);
+		_sntprintf(rawbuf, 256, TEXT("%d"), ExtIORawBufSize / 1024);
 		Edit_SetText(GetDlgItem(hwndDlg, IDC_RAW_BUFFER), rawbuf);
 
 		Button_SetCheck(GetDlgItem(hwndDlg, IDC_RAW_RESTART),
 				ExtIOAutoRestart ? BST_CHECKED : BST_UNCHECKED);
 
-		_stprintf_s(ExtIORawDevice, 256, TEXT("%s"), TEXT(""));
+		_sntprintf(ExtIORawDevice, 256, TEXT("%s"), TEXT(""));
 		Edit_SetText(GetDlgItem(hwndDlg, IDC_RAW_DEVICE), ExtIORawDevice);
 		return TRUE;
 	}
