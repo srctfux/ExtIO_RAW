@@ -109,8 +109,8 @@ END
 // Version
 //
 
-#define DLL_VERSION_INT		2022,03,0,0
-#define DLL_VERSION_STR		"2022.03.0.0"
+#define DLL_VERSION_INT		2022,8,0,0
+#define DLL_VERSION_STR		"2022.8.0.0"
 
 VS_VERSION_INFO VERSIONINFO
  FILEVERSION DLL_VERSION_INT
@@ -129,7 +129,7 @@ BEGIN
     BEGIN
         BLOCK "040904b0"
         BEGIN
-            VALUE "FileDescription", "RAW ExtIO plugin"
+            VALUE "FileDescription", "ExtIO RAW"
             VALUE "FileVersion", DLL_VERSION_STR
             VALUE "InternalName", "ExtIO_RAW"
             VALUE "LegalCopyright", "GPLv2"
