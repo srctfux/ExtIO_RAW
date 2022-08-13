@@ -211,11 +211,17 @@ extern "C" int __stdcall StartHW(long /* LOfreq */)
 		goto close_fd;
 	}
 
+	for (uint32_t i = 0; i < ExtIOBufCount; i++)
+		ExtIOBuf[i] = 0.0f;
+
 	RawBuf = new(std::nothrow) unsigned char[ExtIORawBufSize];
 	if (!RawBuf) {
 		EXTIO_RAW_ERROR("Couldn't allocate read buffer!");
 		goto free_extiobuf;
 	}
+
+	for (int32_t i = 0; i < ExtIORawBufSize; i++)
+		RawBuf[i] = 0;
 
 	RawReadOn = 1;
 
